@@ -10,7 +10,6 @@ spring:
       server:
         native:
           search-locations:
-            - classpath:config/game
             - classpath:config/user-service
 management:
   endpoints:
