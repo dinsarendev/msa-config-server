@@ -1,0 +1,7 @@
+version: '3'
+services:
+  msa-config-server:
+    build: .
+    ports:
+      - "8081:8081"
+    restart: always
