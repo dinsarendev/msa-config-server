@@ -11,6 +11,7 @@ spring:
         native:
           search-locations:
             - classpath:config/user-service
+            - classpath:config/api-gateway
 management:
   endpoints:
     web:
