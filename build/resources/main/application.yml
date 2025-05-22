@@ -13,6 +13,7 @@ spring:
             - classpath:config/user-service/
             - classpath:config/api-gateway/
             - classpath:config/authentication/
+            - classpath:config/report-service/
 management:
   endpoints:
     web:

@@ -1,0 +1,5 @@
+server:
+  port: 2513
+spring:
+  application:
+    name: report-service

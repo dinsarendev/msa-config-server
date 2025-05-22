@@ -4,4 +4,9 @@ services:
     build: .
     ports:
       - "8081:8081"
-    restart: always
+    networks:
+      - cf-network
+
+networks:
+  cf-network:
+    external: true
