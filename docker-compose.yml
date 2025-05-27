@@ -1,6 +1,7 @@
 version: '3'
 services:
   msa-config-server:
+    container_name: msa-config-server
     build: .
     ports:
       - "8081:8081"

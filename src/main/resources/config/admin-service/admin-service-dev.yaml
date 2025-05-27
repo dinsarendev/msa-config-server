@@ -1,16 +1,16 @@
 server:
-  port: 2511
+  port: 2514
 
 spring:
   application:
-    name: idm-user-service
+    name: admin-service
   datasource:
     password: Cambo@1234
     url: jdbc:postgresql://194.233.91.140:5499/cambo_freelance_db
     username: cambo_freelance_user
   jpa:
     hibernate:
-#      ddl-auto: update
+    #      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -43,10 +43,11 @@ logging:
 springdoc:
   api-docs:
     path: /openapi/v3/api-docs
-  packagesToScan: com.cambofreelance.idmservice.controllers
+  packagesToScan: com.cambofreelance.authenticationservice.controllers
   pathsToMatch: /**
   swagger-ui:
     path: /openapi/swagger-ui.html
-report-service:
-  url: http://{{BASE_URL}}/report-service
-  getReportById: /report/{id}
+authentication:
+  jwtExpiration: 300000
+  jwtRefreshExpiration: 86400000
+  jwtSecret: ebe8910a-08c0-11ed-861d-0242ac120002

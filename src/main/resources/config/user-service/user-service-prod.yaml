@@ -47,3 +47,6 @@ springdoc:
   pathsToMatch: /**
   swagger-ui:
     path: /openapi/swagger-ui.html
+report-service:
+  url: http://{{BASE_URL}}/report-service
+  getReportById: /report/{id}
