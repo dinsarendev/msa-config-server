@@ -6,12 +6,12 @@ spring:
   main:
     allow-bean-definition-overriding: true
   r2dbc:
-    url: r2dbc:postgresql://localhost:12009/default_db
+    url: r2dbc:postgresql://161.97.138.103:12009/cf_db
     username: postgres
     password: CF@@2025
   data:
     redis:
-      host: localhost
+      host: 161.97.138.103
       port: 6379
       password: CF@2025
       timeout: 30000
@@ -19,7 +19,7 @@ spring:
         enabled: false
   spring:
     zipkin:
-      base-url: http://localhost:9411
+      base-url: http://161.97.138.103:9411
 logging:
   pattern:
     level: "%5p [${spring.application.name:},%X{traceId},%X{spanId}]"
