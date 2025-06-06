@@ -66,3 +66,9 @@ authentication:
   jwtExpiration: 300000
   jwtRefreshExpiration: 86400000
   jwtSecret: ebe8910a-08c0-11ed-861d-0242ac120002
+
+storage:
+  redis:
+    key-response-code: key-response-code-uat
+    key-api-route: key-api-route-uat
+    key-application-feature: key-application-feature-uat
