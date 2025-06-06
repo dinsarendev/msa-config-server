@@ -3,3 +3,20 @@ server:
 spring:
   application:
     name: report-service
+
+logging:
+  file:
+    path: /uat/logs/${spring.application.name}
+    name: ${logging.file.path}/${POD_NAME:my-app}.log
+
+  pattern:
+    level: "%5p [${spring.application.name},%X{traceId},%X{spanId}]"
+    file: "[%d] [%t] %-5level [${spring.application.name},%X{traceId},%X{spanId},%X{activityid}] %logger{36} - %msg%n"
+    console: "[%d] [%t] %-5level [${spring.application.name},%X{traceId},%X{spanId},%X{activityid}] %logger{36} - %msg%n"
+
+  logback:
+    rollingpolicy:
+      file-name-pattern: ${logging.file.path}/${POD_NAME:my-app}.%d{yyyy-MM-dd}.%i.gz
+      max-file-size: 100MB
+      max-history: 30
+      total-size-cap: 5GB

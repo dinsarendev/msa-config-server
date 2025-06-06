@@ -6,7 +6,7 @@ spring:
     name: admin-service
   datasource:
     password: CF@@2025
-    url: jdbc:postgresql://161.97.138.103:12009/cf_db
+    url: jdbc:postgresql://161.97.138.103:12009/cf_uat_db
     username: postgres
   jpa:
     hibernate:
