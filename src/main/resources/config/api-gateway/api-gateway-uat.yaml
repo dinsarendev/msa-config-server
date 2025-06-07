@@ -1,20 +1,15 @@
 server:
-  port: 2512
-
+  port: 2510
 spring:
   application:
     name: api-gateway
-  datasource:
-    password: CF@@2025
-    url: jdbc:postgresql://161.97.138.103:12009/cf_uat_db
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: reactive
+  r2dbc:
+    url: r2dbc:postgresql://161.97.138.103:12009/cf_uat_db
     username: postgres
-  jpa:
-    hibernate:
-    #      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
+    password: CF@@2025
   data:
     redis:
       host: 161.97.138.103
@@ -23,28 +18,12 @@ spring:
       password: CF@2025
       ssl:
         enabled: false
-
   spring:
     zipkin:
       base-url: http://161.97.138.103:9411
-
 logging:
-  file:
-    path: /uat/logs/${spring.application.name}
-    name: ${logging.file.path}/${POD_NAME:my-app}.log
-
   pattern:
-    level: "%5p [${spring.application.name},%X{traceId},%X{spanId}]"
-    file: "[%d] [%t] %-5level [${spring.application.name},%X{traceId},%X{spanId},%X{activityid}] %logger{36} - %msg%n"
-    console: "[%d] [%t] %-5level [${spring.application.name},%X{traceId},%X{spanId},%X{activityid}] %logger{36} - %msg%n"
-
-  logback:
-    rollingpolicy:
-      file-name-pattern: ${logging.file.path}/${POD_NAME:my-app}.%d{yyyy-MM-dd}.%i.gz
-      max-file-size: 100MB
-      max-history: 30
-      total-size-cap: 5GB
-
+    level: "%5p [${spring.application.name:},%X{traceId},%X{spanId}]"
   servlet:
     multipart:
       max-file-size: 50MB
@@ -53,8 +32,7 @@ logging:
     client:
       path: /image/**
     server:
-      path: /opt/uat/upload/images/
-
+      path: /opt/cambofreelance/upload/images/
 springdoc:
   api-docs:
     path: /openapi/v3/api-docs
