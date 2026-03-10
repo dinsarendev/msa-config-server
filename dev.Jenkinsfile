@@ -8,7 +8,7 @@ pipeline {
     environment {
         PROJECT_SERVICE  = "MSA-CONFIG-SERVICE"
         GIT_BRANCH = "develop"
-        GIT_REPO_URL = "https://github.com/Cambofreelance/msa-config-server.git"
+        GIT_REPO_URL = "https://github.com/Cambofreelance-Software-Development/msa-config-server.git"
         GIT_CREDENTIALS_ID = "github_credentials"
 
         // manifest
