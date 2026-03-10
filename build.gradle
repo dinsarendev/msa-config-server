@@ -31,8 +31,8 @@ ext {
 
 sonar {
     properties {
-        property "sonar.projectKey", "API-GATEWAY"
-        property "sonar.projectName", "API GATEWAY"
+        property "sonar.projectKey", "MSA-CONFIG-SERVICE"
+        property "sonar.projectName", "MSA-CONFIG-SERVICE"
     }
 }
 
