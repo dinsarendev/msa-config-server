@@ -1,54 +1,129 @@
 server:
-  port: 2512
+  port: 25011
 
 spring:
   application:
-    name: authentication-service
+    name: keycloak-authentication-server
   datasource:
-    password: CF@@2025
-    url: jdbc:postgresql://161.97.138.103:12009/cf_db
-    username: postgres
+    url: jdbc:postgresql://62.146.239.183:5511/dev_authentication_db
+    username: keycloak
+    password: keycloak
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-    #      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: validate
+
+  flyway:
+    enabled: true
+    schemas: public
+    baseline-on-migrate: false
+    locations: classpath:db/migration
+    placeholders:
+      defaultSchema: public
+    rollback-locations: classpath:db/rollback
 
   data:
     redis:
-      host: 161.97.138.103
+      host: localhost
       port: 6379
       timeout: 30000
+      user: default
       password: CF@2025
       ssl:
         enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://keycloaks.cambofreelance.com:8443/realms/cambofreelance-dev
 
-  spring:
-    zipkin:
-      base-url: http://161.97.138.103:9411
+keycloak:
+  url: https://keycloaks.cambofreelance.com:8443
+  realm: cambofreelance-dev
+  audience-client-id: cambofreelance
+  audience-client-secret: OMVSKz7rfaO1yDnPu3zjqja2ZUJjvCOB
+  admin-cli-client-id: authentication-client
+  admin-cli-client-secret: fGJReGj5bzLdvUTZUS5kU2hmp7rBpfyo
+
+otel:
+  exporter:
+    otlp:
+      endpoint: http://alloy:4317
+      protocol: grpc
+  logs:
+    exporter: none
+  metrics:
+    exporter: none
+  traces:
+    sampler:
+      probability: 1.0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,refresh
+
 logging:
-  pattern:
-    level: "%5p [${spring.application.name:},%X{traceId},%X{spanId}]"
+  enable: true
+  includeRequest: true
+  includeRequestBody: true
+  maskLogKey: maskingKey001,maskingkey001,masking-type-002 # its type is sensitive
+  ignoreDefaultMaskingLogKey: ignoreMaskingKey001,ignoreMasking-type-002
+  includeRequestHeader: true
+  maxRequestBody: 1000 # its value is byte
+  ignoreAntMatches: /abc,/zte-ba/**,/hiding-log # this value just example
+  includeResponse: true
+  includeResponseHeader: true
+  maskResponseHeaderKey: maskingKey001,maskingkey001,masking-type-002 # its type isn't sensitive
+  includeResponseBody: true
+  maxResponseBody: 200 # its value is byte, the log size response
 
-  servlet:
-    multipart:
-      max-file-size: 50MB
-      max-request-size: 50MB
-  upload:
-    client:
-      path: /image/**
-    server:
-      path: /opt/cambofreelance/upload/images/
+  pattern:
+    level: "%5p [${spring.application.name},%X{traceId},%X{spanId}]"
+    console: "[%d] [%t] %-5level [${spring.application.name},%X{traceId},%X{spanId},%X{activityid}] %logger{36} - %msg%n"
 
 springdoc:
   api-docs:
     path: /openapi/v3/api-docs
-  packagesToScan: com.cambofreelance.authenticationservice.controllers
-  pathsToMatch: /**
+  packages-to-scan: com.cambofreelance.keycloakauthenticationserver.controllers
+  paths-to-match: /**
   swagger-ui:
     path: /openapi/swagger-ui.html
-authentication:
-  jwtExpiration: 300000
-  jwtRefreshExpiration: 86400000
-  jwtSecret: ebe8910a-08c0-11ed-861d-0242ac120002
+
+storage:
+  redis:
+    key-response-code: type-response-code-authentication
+
+aes-cipher:
+  gcm:
+    key: UsLHzxoYLfUZ6sFbPs906dWmf3tulwJs/MfMAvT8SLk=
+    algorithm: AES/GCM/NoPadding
+    iv: ZGRFq4ZfB20=
+    key-size: 128
+
+app-config:
+  otp-expired: 120 # OTP expired in 2 min
+  otp-limited-generate: 100 # OTP limited generate in 100 time
+  password-policy: 8
+
+applogger:
+  enabled: true
+  mode: PARTIAL
+
+
+mail:
+  host: smtp.gmail.com
+  port: 587
+  username: cambofreelance.dev@gmail.com
+  password: The@2424
+  properties:
+    mail:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+otp:
+  expiration-minutes: 5
+  limit-per-day: 10
+  user-session-expiration-minutes: 30
