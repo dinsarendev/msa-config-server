@@ -3,7 +3,10 @@ server:
 
 spring:
   application:
-    name: keycloak-authentication-server
+    name: authentication-server
+  cloud:
+    compatibility-verifier:
+      enabled: false
   datasource:
     url: jdbc:postgresql://194.233.91.140:2017/dev_authentication_db
     username: postgres
@@ -21,6 +24,8 @@ spring:
     placeholders:
       defaultSchema: public
     rollback-locations: classpath:db/rollback
+  cache:
+    type: redis
 
   data:
     redis:
@@ -31,6 +36,8 @@ spring:
       #      password: CF@2025
       ssl:
         enabled: false
+      repositories:
+        enabled: false
   security:
     oauth2:
       resourceserver:
@@ -40,15 +47,41 @@ spring:
 keycloak:
   url: https://key-aim.cambofreelance.com
   realm: cambofreelance.dev
-  audience-client-id: KPS_GAME
-  audience-client-secret: yCygkPDxcPp3qtH0lGtBHvFhXKYBxTm1
+  audience-client-id: CAMBO_FREELANCE
+  audience-client-secret: wAQozfxCQMuLoT1ONpZzwenbM6FM2fpQ
   admin-cli-client-id: authentication-client
   admin-cli-client-secret: wJzYfm093CKXwCmzScq1Qm6IAVNCcoLz
+  use-entitlements: false # false: check specific permission
+  permission-resource-format: id # perm: resourceId#scope
+  include-resource-name: true # check authorization by provide resourceName, then will call to get resourceId
+  http:
+    connect-timeout-ms: 10000
+    response-timeout-ms: 30000
+  retry:
+    maxRetries: 3
+    delayMs: 500
+  cache:
+    prefix: keycloak
+    expiry-safety-slack: 60s # subtract from provider expires_in
+    default-ttl: 1h
+    revoke:
+      key: revoke
+      max-ttl: 12h
+    authorization:
+      enabled: false
+      key: authorizations
+      token-ttl: 5m
+    client-credential:
+      enabled: false
+      key: client_credentials
+    resource:
+      enabled: false
+      key: resources
 
 otel:
   exporter:
     otlp:
-      endpoint: http://alloy:4317
+      endpoint: http://alloy.monitoring.svc.cluster.local:4317
       protocol: grpc
   logs:
     exporter: none
@@ -57,6 +90,9 @@ otel:
   traces:
     sampler:
       probability: 1.0
+
+  service:
+    name: keycloak-authentication-server
 
 management:
   endpoints:
@@ -89,7 +125,7 @@ springdoc:
   packages-to-scan: com.cambofreelance.keycloakauthenticationserver.controllers
   paths-to-match: /**
   swagger-ui:
-    path: /openapi/swagger-ui.html
+    path: /auth/openapi/swagger-ui.html
 
 storage:
   redis:
@@ -127,3 +163,7 @@ otp:
   expiration-minutes: 5
   limit-per-day: 10
   user-session-expiration-minutes: 30
+
+
+lottery-service:
+  url: http://lottery-api-service:25011

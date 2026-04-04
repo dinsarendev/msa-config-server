@@ -4,6 +4,27 @@ server:
 spring:
   application:
     name: api-gateway
+  cloud:
+    compatibility-verifier:
+      enabled: false
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns:
+              - "http://localhost:[*]"
+              - "https://*.cambofreelance.com"
+              - "https://*.365winkh.com"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
   r2dbc:
     url: r2dbc:postgresql://194.233.91.140:2017/api_gateway_db
     username: postgres
