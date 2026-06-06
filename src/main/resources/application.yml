@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8085
 spring:
   application:
     name: msa-config-server
@@ -15,8 +15,3 @@ spring:
             - classpath:config/authentication-server/
             - classpath:config/lottery/
             - classpath:config/document/
-management:
-  endpoints:
-    web:
-      exposure:
-        exclude: '*'
