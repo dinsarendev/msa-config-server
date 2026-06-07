@@ -25,9 +25,9 @@ spring:
               - "*"
             allowCredentials: true
   r2dbc:
-    url: r2dbc:postgresql://URL:PORT/api_gateway_db
-    username: {{USERNAME}}
-    password: {{PASSWORD}}
+    url: r2dbc:postgresql://localhost:2677/api_gateway_db
+    username: postgres
+    password: BBU@2026
 
   security:
     oauth2:
