@@ -1,12 +1,18 @@
-version: '3'
+version: '3.8'
+name: cf-team
+
 services:
   msa-config-server:
-    container_name: msa-config-server
-    build: .
+    image: nexus.cambofreelance.com/docker-hosted/msa-config-server:v1.0.0
+    container_name: svc-msa-config-server
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8081:8081"
     networks:
       - cf-network
+    restart: unless-stopped
 
 networks:
   cf-network:

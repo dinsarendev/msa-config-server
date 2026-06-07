@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8085
 spring:
   application:
     name: msa-config-server
@@ -10,13 +10,5 @@ spring:
       server:
         native:
           search-locations:
-            - classpath:config/user-service/
             - classpath:config/api-gateway/
-            - classpath:config/authentication/
-            - classpath:config/report-service/
-            - classpath:config/admin-service/
-management:
-  endpoints:
-    web:
-      exposure:
-        exclude: '*'
+            - classpath:config/document/
