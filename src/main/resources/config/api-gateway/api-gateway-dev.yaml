@@ -1,5 +1,5 @@
 server:
-  port: 25010
+  port: 26080
 
 spring:
   application:
@@ -15,7 +15,6 @@ spring:
             allowedOriginPatterns:
               - "http://localhost:[*]"
               - "https://*.cambofreelance.com"
-              - "https://*.365winkh.com"
             allowedMethods:
               - GET
               - POST
@@ -26,15 +25,15 @@ spring:
               - "*"
             allowCredentials: true
   r2dbc:
-    url: r2dbc:postgresql://194.233.91.140:2017/api_gateway_db
-    username: postgres
-    password: CAMBO@@2026
+    url: r2dbc:postgresql://URL:PORT/api_gateway_db
+    username: {{USERNAME}}
+    password: {{PASSWORD}}
 
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://key-aim.cambofreelance.com/realms/cambofreelance.dev
+          issuer-uri: URL-OAUTH2-ISSUER
 
 logging:
   enable: true
@@ -123,7 +122,7 @@ health-check:
 authentication:
   jwtExpiration: 3600000 # 1 hour
   jwtRefreshExpiration: 2592000000 # 30 days in ms
-  jwtSecret: b0aff574-a86e-4714-8108-63675311a839
+  jwtSecret: 72895df7-b9c9-449f-a71a-6dfdf3c9a1cf
 
 storage:
   redis:
@@ -132,7 +131,7 @@ storage:
 
 aes-cipher:
   gcm:
-    key: UsLHzxoYLfUZ6sFbPs906dWmf3tulwJs/MfMAvT8SLk=
+    key: +tGHwQqilsKd+PszQpcnPuOo2YxMnQuCF/YgDjk4DdQ=
     algorithm: AES/GCM/NoPadding
-    iv: ZGRFq4ZfB20=
+    iv: PLx4PVdUNV7eJSIS0CgtWQ==
     tag-size: 128

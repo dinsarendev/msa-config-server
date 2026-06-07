@@ -10,8 +10,5 @@ spring:
       server:
         native:
           search-locations:
-            - classpath:config/common/
             - classpath:config/api-gateway/
-            - classpath:config/authentication-server/
-            - classpath:config/lottery/
             - classpath:config/document/

@@ -16,13 +16,6 @@ java {
 
 repositories {
     mavenCentral()
-    maven {
-        url "${findProperty('NEXUS_URL') ?: System.getenv('NEXUS_URL')}/repository/maven-public/"
-        credentials {
-            username = findProperty('NEXUS_USERNAME') ?: System.getenv('NEXUS_USERNAME')
-            password = findProperty('NEXUS_PASSWORD') ?: System.getenv('NEXUS_PASSWORD')
-        }
-    }
 }
 
 ext {
